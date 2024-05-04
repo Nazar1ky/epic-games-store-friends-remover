@@ -12,6 +12,7 @@
 </p>
 
 <img src="https://github.com/Nazar1ky/epic-games-store-remove-all-friends/blob/main/pic.png" />
+
 ## Usage:
 Epic Games Store Friends Remover is pretty simple to use.
 
