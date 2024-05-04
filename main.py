@@ -1,7 +1,9 @@
 import time
+
 import requests
 from rich.console import Console
 from rich.progress import track
+
 
 class DeleteFriends:
     def __init__(self):
@@ -43,7 +45,7 @@ class DeleteFriends:
         }
         data = {
             "grant_type": "authorization_code",
-            "code": authorization_code
+            "code": authorization_code,
         }
 
         response = requests.post("https://account-public-service-prod.ol.epicgames.com/account/api/oauth/token", headers=headers, data=data)
@@ -51,16 +53,15 @@ class DeleteFriends:
         data = response.json()
 
         if "errorCode" in data:
-            return False, data['errorCode'], data['errorMessage']
-        
-        account_data = {
-            "access_token": data['access_token'],
-            "account_id": data['account_id'],
-            "displayName": data['displayName'],
-            "expires_in": data['expires_in'],
-            "expires_at": data['expires_at']
+            return False, data["errorCode"], data["errorMessage"]
+
+        return {
+            "access_token": data["access_token"],
+            "account_id": data["account_id"],
+            "displayName": data["displayName"],
+            "expires_in": data["expires_in"],
+            "expires_at": data["expires_at"],
         }
-        return account_data
 
     def getFriendsIds(self):
         headers = {
@@ -69,11 +70,10 @@ class DeleteFriends:
         }
 
         data = requests.get(f"https://friends-public-service-prod.ol.epicgames.com/friends/api/v1/{self.data['account_id']}/summary", headers=headers).json()
-        
-        friends_account_id = [friend['accountId'] for friend in data['friends']]
-        
-        return friends_account_id
-    
+
+        return [friend["accountId"] for friend in data["friends"]]
+
+
     def accountIdInfo(self, friend_id):
         headers = {
             "Content-Type": "application/x-www-form-urlencoded",
@@ -81,8 +81,8 @@ class DeleteFriends:
         }
 
         data = requests.get(f"https://account-public-service-prod.ol.epicgames.com/account/api/public/account/{friend_id}", headers=headers).json()
-        
-        return data['displayName'], data['id']
+
+        return data["displayName"], data["id"]
 
     def deleteFriend(self, friend_id):
         while True:
@@ -92,10 +92,8 @@ class DeleteFriends:
             }
 
             response = requests.delete(f"https://friends-public-service-prod.ol.epicgames.com/friends/api/v1/{self.data['account_id']}/friends/{friend_id}", headers=headers)
-
-            data = response.json()
-
             try:
+                data = response.json()
                 if "errorCode" in data:
                     # self.console.print("[yellow] Waiting 20 seconds...")
                     time.sleep(20)
@@ -103,7 +101,7 @@ class DeleteFriends:
                 break
 
         return True
-    
+
 if __name__ == "__main__":
     app = DeleteFriends()
     app.run()
