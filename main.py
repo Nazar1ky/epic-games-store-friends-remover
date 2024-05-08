@@ -1,69 +1,103 @@
-import time
+import base64
 
 import requests
 from rich.console import Console
-from rich.progress import track
 
 
 class DeleteFriends:
     def __init__(self):
-        self.console = Console()
+        self.client = base64.b64encode(
+            "98f7e42c2e3a4f86a74eb43fbb41ed39:0a2449a2-001a-451e-afec-3e812901c4d7"
+            .encode("utf-8")
+        ).decode("utf-8") # https://github.com/MixV2/EpicResearch/blob/master/docs/auth/auth_clients.md
 
+        self.console = Console()
         self.console.clear()
 
-        self.console.print("[bold yellow]Epic Games Store Friends Remover")
-        authorization_code = self.console.input("[green]Please enter your [bold red][link=https://www.epicgames.com/id/api/redirect?clientId=ec684b8c687f479fadea3cb2ad83f5c6&responseType=code]Authorization Code[/link]: ")
+        self.console.print("[yellow bold]Epic Games Store Friends Remover")
 
         self.console.print("[yellow]Creating Access Token...")
 
-        account_data = self.createToken(authorization_code)
+        token = self.create_token()
 
-        if 0 in account_data and account_data[0] is False:
-            self.console.print(f"[red][bold][ERROR][/bold] {account_data[2]}")
-            exit()
+        auth_link, device_code = self.device_code(token)
 
-        self.data = account_data
+        self.console.input(f"[green bold]Verify login [/green bold][yellow](click enter to continue)[/yellow][green bold]:[/green bold] [red]{auth_link}")
+
+        data = self.device_code_verify(device_code)
+
+        if not data:
+            self.console.print("[red][bold][ERROR][/bold] Try restart script.")
+
+        self.data = data
 
     def run(self):
         self.console.clear()
 
-        self.console.print(f"[green]Successfully logged in {self.data['displayName']}")
+        self.console.print(f"[green]Successfully logged in {self.data['display_name']}")
 
-        friends_account_id = self.getFriendsIds()
+        self.console.print("[green]Removing Friends...")
 
-        for friend_account_id in track(friends_account_id, description="[green]Deleting Friends..."):
-            self.deleteFriend(friend_account_id)
+        friends_count = self.get_friend_count()
+        self.delete_friends()
 
-            # print(self.accountIdInfo(friend_account_id))
+        self.console.print(f"[green]Removed {friends_count} friends! [yellow]You can kill all sessions to reset token.")
 
-        self.console.print("[green]Done! [yellow]You can kill all sessions to reset token.")
-
-    def createToken(self, authorization_code):
+    def create_token(self):
         headers = {
             "Content-Type": "application/x-www-form-urlencoded",
-            "Authorization": "basic ZWM2ODRiOGM2ODdmNDc5ZmFkZWEzY2IyYWQ4M2Y1YzY6ZTFmMzFjMjExZjI4NDEzMTg2MjYyZDM3YTEzZmM4NGQ=",
+            "Authorization": f"basic {self.client}",
         }
-        data = {
-            "grant_type": "authorization_code",
-            "code": authorization_code,
+        body = {
+            "grant_type": "client_credentials",
         }
 
-        response = requests.post("https://account-public-service-prod.ol.epicgames.com/account/api/oauth/token", headers=headers, data=data)
+        response = requests.post("https://account-public-service-prod.ol.epicgames.com/account/api/oauth/token", headers=headers, data=body)
+
+        data = response.json()
+
+        # if "errorCode" in data:
+            # return False, data["errorCode"], data["errorMessage"]
+
+        return data["access_token"]
+
+    def device_code(self, token):
+        headers = {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Authorization": f"bearer {token}",
+        }
+
+        response = requests.post("https://account-public-service-prod03.ol.epicgames.com/account/api/oauth/deviceAuthorization", headers=headers)
+
+        data = response.json()
+
+        return data["verification_uri_complete"], data["device_code"]
+
+    def device_code_verify(self, device_code):
+        headers = {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Authorization": f"basic {self.client}",
+        }
+
+        body = {
+            "grant_type": "device_code",
+            "device_code": device_code,
+        }
+
+        response = requests.post("https://account-public-service-prod.ol.epicgames.com/account/api/oauth/token", headers=headers, data=body)
 
         data = response.json()
 
         if "errorCode" in data:
-            return False, data["errorCode"], data["errorMessage"]
+            return None
 
         return {
-            "access_token": data["access_token"],
+            "display_name": data["displayName"],
             "account_id": data["account_id"],
-            "displayName": data["displayName"],
-            "expires_in": data["expires_in"],
-            "expires_at": data["expires_at"],
+            "access_token": data["access_token"],
         }
 
-    def getFriendsIds(self):
+    def get_friend_count(self):
         headers = {
             "Content-Type": "application/x-www-form-urlencoded",
             "Authorization": f"bearer {self.data['access_token']}",
@@ -71,37 +105,19 @@ class DeleteFriends:
 
         data = requests.get(f"https://friends-public-service-prod.ol.epicgames.com/friends/api/v1/{self.data['account_id']}/summary", headers=headers).json()
 
-        return [friend["accountId"] for friend in data["friends"]]
+        return len(data["friends"])
 
 
-    def accountIdInfo(self, friend_id):
+    def delete_friends(self):
         headers = {
             "Content-Type": "application/x-www-form-urlencoded",
             "Authorization": f"bearer {self.data['access_token']}",
         }
 
-        data = requests.get(f"https://account-public-service-prod.ol.epicgames.com/account/api/public/account/{friend_id}", headers=headers).json()
-
-        return data["displayName"], data["id"]
-
-    def deleteFriend(self, friend_id):
-        while True:
-            headers = {
-                "Content-Type": "application/x-www-form-urlencoded",
-                "Authorization": f"bearer {self.data['access_token']}",
-            }
-
-            response = requests.delete(f"https://friends-public-service-prod.ol.epicgames.com/friends/api/v1/{self.data['account_id']}/friends/{friend_id}", headers=headers)
-            try:
-                data = response.json()
-                if "errorCode" in data:
-                    # self.console.print("[yellow] Waiting 20 seconds...")
-                    time.sleep(20)
-            except requests.exceptions.JSONDecodeError:
-                break
-
-        return True
+        requests.delete(f"https://friends-public-service-prod.ol.epicgames.com/friends/api/v1/{self.data["account_id"]}/friends", headers=headers)
 
 if __name__ == "__main__":
     app = DeleteFriends()
-    app.run()
+
+    if app.data:
+        app.run()
