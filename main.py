@@ -39,7 +39,7 @@ class DeleteFriends:
         friends_count = self.get_friend_count()
         self.delete_friends()
 
-        self.console.print(f"[green]Removed {friends_count} friends! [yellow]You can kill all sessions to reset token.")
+        self.console.print(f"[green bold]Removed {friends_count} friends![/green bold] [yellow]You can kill all sessions to reset token.")
 
     def create_token(self): # Reference: https://github.com/MixV2/EpicResearch/blob/master/docs/auth/grant_types/client_credentials.md
         headers = {
