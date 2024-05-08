@@ -17,13 +17,11 @@ class DeleteFriends:
         self.console.print("[yellow bold]Epic Games Store Friends Remover")
 
         self.console.print("[yellow]Creating Access Token...")
-
         token = self.create_token()
 
         auth_link, device_code = self.device_code(token)
 
         self.console.input(f"[green bold]Verify login [/green bold][yellow](click enter to continue)[/yellow][green bold]:[/green bold] [red]{auth_link}")
-
         data = self.device_code_verify(device_code)
 
         if not data:
@@ -43,7 +41,7 @@ class DeleteFriends:
 
         self.console.print(f"[green]Removed {friends_count} friends! [yellow]You can kill all sessions to reset token.")
 
-    def create_token(self):
+    def create_token(self): # Reference: https://github.com/MixV2/EpicResearch/blob/master/docs/auth/grant_types/client_credentials.md
         headers = {
             "Content-Type": "application/x-www-form-urlencoded",
             "Authorization": f"basic {self.client}",
@@ -56,12 +54,9 @@ class DeleteFriends:
 
         data = response.json()
 
-        # if "errorCode" in data:
-            # return False, data["errorCode"], data["errorMessage"]
-
         return data["access_token"]
 
-    def device_code(self, token):
+    def device_code(self, token): # Reference: https://github.com/LeleDerGrasshalmi/FortniteEndpointsDocumentation/blob/main/EpicGames/AccountService/Authentication/DeviceCode/Create.md
         headers = {
             "Content-Type": "application/x-www-form-urlencoded",
             "Authorization": f"bearer {token}",
@@ -73,7 +68,7 @@ class DeleteFriends:
 
         return data["verification_uri_complete"], data["device_code"]
 
-    def device_code_verify(self, device_code):
+    def device_code_verify(self, device_code): # Reference: https://github.com/MixV2/EpicResearch/blob/master/docs/auth/grant_types/device_code.md
         headers = {
             "Content-Type": "application/x-www-form-urlencoded",
             "Authorization": f"basic {self.client}",
@@ -97,7 +92,7 @@ class DeleteFriends:
             "access_token": data["access_token"],
         }
 
-    def get_friend_count(self):
+    def get_friend_count(self): # Reference: https://github.com/LeleDerGrasshalmi/FortniteEndpointsDocumentation/blob/main/EpicGames/FriendsService/Friends/FriendsList.md
         headers = {
             "Content-Type": "application/x-www-form-urlencoded",
             "Authorization": f"bearer {self.data['access_token']}",
@@ -108,7 +103,7 @@ class DeleteFriends:
         return len(data["friends"])
 
 
-    def delete_friends(self):
+    def delete_friends(self): # Reference: https://github.com/LeleDerGrasshalmi/FortniteEndpointsDocumentation/blob/main/EpicGames/FriendsService/Friends/Clear.md
         headers = {
             "Content-Type": "application/x-www-form-urlencoded",
             "Authorization": f"bearer {self.data['access_token']}",
