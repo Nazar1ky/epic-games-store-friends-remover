@@ -1,4 +1,4 @@
-![image](https://github.com/Nazar1ky/epic-games-store-remove-all-friends/assets/78618525/09c80c14-b057-4452-9e28-56be421c284c)<h1 align="center">Epic Games Friends Remover</h1>
+<h1 align="center">Epic Games Friends Remover</h1>
 <p align="center">
     <a href="https://www.python.org/downloads/release/python-380/" align="center">
         <img alt="Python" src="https://img.shields.io/badge/python-3.8 | 3.9 | 3.10 | 3.11 | 3.12-blue">
