@@ -5,39 +5,36 @@ from rich.console import Console
 
 TIMEOUT_IN_SECONDS = 10
 
-
 class DeleteFriends:
     def __init__(self) -> None:
+        # https://github.com/MixV2/EpicResearch/blob/master/docs/auth/auth_clients.md
         self.client = base64.b64encode(
             b"98f7e42c2e3a4f86a74eb43fbb41ed39:0a2449a2-001a-451e-afec-3e812901c4d7",
         ).decode(
             "utf-8",
-        )  # https://github.com/MixV2/EpicResearch/blob/master/docs/auth/auth_clients.md
+        )
 
         self.console = Console()
-        self.console.clear()
 
+        token = self.create_token()
+        self.auth_link, self.device_code = self.device_code(token)
+
+    def run(self) -> bool:
+        self.console.clear()
         self.console.print("[yellow bold]Epic Games Store Friends Remover")
 
-        self.console.print("[yellow]Creating Access Token...")
-        token = self.create_token()
-
-        auth_link, device_code = self.device_code(token)
-
         self.console.input(
-            f"[green bold]Verify login [/green bold][yellow](click enter to continue)[/yellow][green bold]:[/green bold] [red]{auth_link}",
+            f"[green bold]Verify login [/green bold][yellow](click enter to continue)[/yellow][green bold]:[/green bold] [red]{self.auth_link}",
         )
-        data = self.device_code_verify(device_code)
+        data = self.device_code_verify(self.device_code)
 
-        if not data:
-            self.console.print("[red][bold][ERROR][/bold] Try restart script.")
+        if not data["success"]:
+            self.console.print(f"[red][bold][ERROR][/bold] {data['error_message']}")
+            return False
 
         self.data = data
 
-    def run(self) -> None:
-        self.console.clear()
-
-        self.console.print(f"[green]Successfully logged in {self.data['display_name']}")
+        self.console.print(f"[green]Successfully logged in [bold]{self.data['display_name']}")
 
         self.console.print("[green]Removing Friends...")
 
@@ -48,9 +45,12 @@ class DeleteFriends:
             f"[green bold]Removed {friends_count} friends![/green bold] [yellow]You can kill all sessions to reset token.",
         )
 
-    def create_token(
-        self,
-    ):  # Reference: https://github.com/MixV2/EpicResearch/blob/master/docs/auth/grant_types/client_credentials.md
+        self.console.input()
+
+        return None
+
+    # Reference: https://github.com/MixV2/EpicResearch/blob/master/docs/auth/grant_types/client_credentials.md
+    def create_token(self) -> str:
         headers = {
             "Content-Type": "application/x-www-form-urlencoded",
             "Authorization": f"basic {self.client}",
@@ -68,10 +68,8 @@ class DeleteFriends:
 
         return data["access_token"]
 
-    def device_code(
-        self,
-        token,
-    ):  # Reference: https://github.com/LeleDerGrasshalmi/FortniteEndpointsDocumentation/blob/main/EpicGames/AccountService/Authentication/DeviceCode/Create.md
+    # Reference: https://github.com/LeleDerGrasshalmi/FortniteEndpointsDocumentation/blob/main/EpicGames/AccountService/Authentication/DeviceCode/Create.md
+    def device_code(self, token) -> tuple:
         headers = {
             "Content-Type": "application/x-www-form-urlencoded",
             "Authorization": f"bearer {token}",
@@ -85,10 +83,8 @@ class DeleteFriends:
 
         return data["verification_uri_complete"], data["device_code"]
 
-    def device_code_verify(
-        self,
-        device_code,
-    ):  # Reference: https://github.com/MixV2/EpicResearch/blob/master/docs/auth/grant_types/device_code.md
+    # Reference: https://github.com/MixV2/EpicResearch/blob/master/docs/auth/grant_types/device_code.md
+    def device_code_verify(self, device_code) -> dict:
         headers = {
             "Content-Type": "application/x-www-form-urlencoded",
             "Authorization": f"basic {self.client}",
@@ -107,17 +103,21 @@ class DeleteFriends:
         ).json()
 
         if "errorCode" in data:
-            return None
+            return {
+                "success": False,
+                "error_code": data["errorCode"],
+                "error_message": data["errorMessage"],
+            }
 
         return {
+            "success": True,
             "display_name": data["displayName"],
             "account_id": data["account_id"],
             "access_token": data["access_token"],
         }
 
-    def get_friend_count(
-        self,
-    ):  # Reference: https://github.com/LeleDerGrasshalmi/FortniteEndpointsDocumentation/blob/main/EpicGames/FriendsService/Friends/FriendsList.md
+    # Reference: https://github.com/LeleDerGrasshalmi/FortniteEndpointsDocumentation/blob/main/EpicGames/FriendsService/Friends/FriendsList.md
+    def get_friend_count(self) -> int:
         headers = {
             "Content-Type": "application/x-www-form-urlencoded",
             "Authorization": f"bearer {self.data['access_token']}",
@@ -131,9 +131,8 @@ class DeleteFriends:
 
         return len(data["friends"])
 
-    def delete_friends(
-        self,
-    ) -> None:  # Reference: https://github.com/LeleDerGrasshalmi/FortniteEndpointsDocumentation/blob/main/EpicGames/FriendsService/Friends/Clear.md
+    # Reference: https://github.com/LeleDerGrasshalmi/FortniteEndpointsDocumentation/blob/main/EpicGames/FriendsService/Friends/Clear.md
+    def delete_friends(self) -> None:
         headers = {
             "Content-Type": "application/x-www-form-urlencoded",
             "Authorization": f"bearer {self.data['access_token']}",
@@ -147,7 +146,4 @@ class DeleteFriends:
 
 
 if __name__ == "__main__":
-    app = DeleteFriends()
-
-    if app.data:
-        app.run()
+    app = DeleteFriends().run()
