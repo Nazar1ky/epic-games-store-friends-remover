@@ -16,6 +16,9 @@
 
 <img src="https://github.com/Nazar1ky/epic-games-store-remove-all-friends/blob/main/pic.png" />
 
+## Description
+This script remove all your friends in 5 seconds for Epic Games Store. Open Source, you can download code and edit it. if you Windows user you can download latest exe from [releases](https://github.com/Nazar1ky/epic-games-store-remove-all-friends/releases) or [Github Actions](https://github.com/Nazar1ky/epic-games-store-remove-all-friends/actions).
+
 ## Usage:
 Epic Games Store Friends Remover is pretty simple to use.
 
@@ -25,7 +28,7 @@ Epic Games Store Friends Remover is pretty simple to use.
 3. Follow the script instructions.
 
 ## Python
-1. Download or clone repository using `git clone https://github.com/Nazar1ky/IndieGala-sale-scraper/`
+1. Download or clone repository using `git clone https://github.com/Nazar1ky/epic-games-store-remove-all-friends`
 2. Install the requirements.
 
     ```
