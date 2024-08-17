@@ -10,7 +10,7 @@ TIMEOUT_IN_SECONDS = 10
 CLIENT = b"98f7e42c2e3a4f86a74eb43fbb41ed39:0a2449a2-001a-451e-afec-3e812901c4d7"
 
 
-class DeleteFriends:
+class FriendsRemover:
     def __init__(self) -> None:
         # https://github.com/MixV2/EpicResearch/blob/master/docs/auth/auth_clients.md
         self.client = base64.b64encode(
@@ -171,7 +171,7 @@ class DeleteFriends:
         )
 
 def main() -> None:
-    friends_remover = DeleteFriends()
+    friends_remover = FriendsRemover()
     friends_remover.run()
 
 if __name__ == "__main__":
