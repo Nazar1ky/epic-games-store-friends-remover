@@ -1,7 +1,7 @@
 <h1 align="center">Epic Games Friends Remover</h1>
 <p align="center">
     <a href="https://www.python.org/downloads/release/python-380/" align="center">
-        <img alt="Python" src="https://img.shields.io/badge/python-3.8 | 3.9 | 3.10 | 3.11 | 3.12-blue">
+        <img alt="Python" src="https://img.shields.io/badge/python-3.12-blue">
     </a>
     <a href="https://github.com/Nazar1ky/epic-games-store-remove-all-friends/issues" align="center">
         <img alt="GitHub Issues" src="https://img.shields.io/github/issues/Nazar1ky/epic-games-store-remove-all-friends">
@@ -14,7 +14,8 @@
     </a>
 </p>
 
-<img src="https://github.com/Nazar1ky/epic-games-store-remove-all-friends/blob/main/pic.png" />
+## Preview:
+<img src="pic.png" />
 
 ## Description
 This script remove all your friends in 5 seconds for Epic Games Store. Open Source, you can download code and edit it. if you Windows user you can download latest exe from [releases](https://github.com/Nazar1ky/epic-games-store-remove-all-friends/releases) or [Github Actions](https://github.com/Nazar1ky/epic-games-store-remove-all-friends/actions).
