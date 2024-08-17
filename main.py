@@ -130,7 +130,7 @@ class FriendsRemover:
 
         return response.json()
 
-    def _get_friends(self) -> int:
+    def _get_friends(self) -> dict:
         """https://github.com/LeleDerGrasshalmi/FortniteEndpointsDocumentation/blob/main/EpicGames/FriendsService/Friends/FriendsList.md"""
         headers = {
             "Authorization": f"bearer {self.bearer}",
