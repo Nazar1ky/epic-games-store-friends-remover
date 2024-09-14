@@ -28,7 +28,7 @@ Epic Games Store Friends Remover is pretty simple to use.
 > **Windows Defender mark exe as virus because it compiled using PyInstaller and have no-sign.**
 
 * If you Windows user you can download exe from [releases](https://github.com/Nazar1ky/epic-games-store-remove-all-friends/releases).
-* [Alternative way](https://github.com/Nazar1ky/epic-games-store-remove-all-friends/releases) to run script using source and Python.
+* [Alternative way](https://github.com/Nazar1ky/epic-games-store-remove-all-friends?tab=readme-ov-file#python) to run script using source and Python.
 
 ### Python
 1. Make sure that you have installed [**Python 3.12**](https://www.python.org/downloads/) with checkbox ["Add Python 3.12 to PATH"](https://miro.medium.com/v2/resize:fit:1344/0*7nOyowsPsGI19pZT.png).
