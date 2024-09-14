@@ -1,7 +1,7 @@
 <h1 align="center">Epic Games Friends Remover</h1>
 
 <p align="center">
-    <a href="https://www.python.org/downloads/release/python-380/" align="center">
+    <a href="https://www.python.org/downloads/release/python-3126/" align="center">
         <img alt="Python" src="https://img.shields.io/badge/python-3.12-blue?logo=python&style=for-the-badge&logoColor=white">
     </a>
     <a href="https://github.com/Nazar1ky/epic-games-store-remove-all-friends/issues" align="center">
@@ -31,7 +31,7 @@ Epic Games Store Friends Remover is pretty simple to use.
 * [Alternative way](https://github.com/Nazar1ky/epic-games-store-remove-all-friends/releases) to run script using source and Python.
 
 ### Python
-1. Make sure that you have installed [**Python 3.12**](https://www.python.org/downloads/).
+1. Make sure that you have installed [**Python 3.12**](https://www.python.org/downloads/) with checkbox ["Add Python 3.12 to PATH"](https://miro.medium.com/v2/resize:fit:1344/0*7nOyowsPsGI19pZT.png).
 3. [Download](https://github.com/Nazar1ky/epic-games-store-remove-all-friends/archive/refs/heads/main.zip) or clone repository using [**Git**](https://git-scm.com/downloads).
 ```
 git clone https://github.com/Nazar1ky/epic-games-store-remove-all-friends
