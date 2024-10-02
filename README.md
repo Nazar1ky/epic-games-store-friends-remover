@@ -14,14 +14,15 @@
         <img alt="GitHub Build" src="https://img.shields.io/github/actions/workflow/status/Nazar1ky/epic-games-store-remove-all-friends/actions.yaml?logo=github&style=for-the-badge">
     </a>
 </p>
+![Friends Remover](https://github.com/user-attachments/assets/e5c37dd5-6389-4d83-b9e2-f2bc2e71cbb6)
 
 ## Preview
-<img src="pic.png" />
+![pic](https://github.com/user-attachments/assets/36e140fe-1aa4-4502-b095-54b744569d91)
 
 ## Description
 Basically that's bulk remover, you have to login and script will remove friends in one request.
 
-## Usage 
+## Usage
 Epic Games Store Friends Remover is pretty simple to use.
 
 > [!WARNING]
