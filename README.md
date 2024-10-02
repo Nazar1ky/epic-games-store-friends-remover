@@ -14,7 +14,10 @@
         <img alt="GitHub Build" src="https://img.shields.io/github/actions/workflow/status/Nazar1ky/epic-games-store-remove-all-friends/actions.yaml?logo=github&style=for-the-badge">
     </a>
 </p>
-![Friends Remover](https://github.com/user-attachments/assets/e5c37dd5-6389-4d83-b9e2-f2bc2e71cbb6)
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/e5c37dd5-6389-4d83-b9e2-f2bc2e71cbb6" alt="Friends Remover"/>
+</div>
 
 ## Preview
 ![pic](https://github.com/user-attachments/assets/36e140fe-1aa4-4502-b095-54b744569d91)
