@@ -121,7 +121,6 @@ class FriendsRemover:
             timeout=TIMEOUT_IN_SECONDS,
         )
 
-        print(response.text)
         response.raise_for_status()
 
         return response.json()
