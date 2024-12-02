@@ -21,10 +21,6 @@ class FriendsRemover:
 
         self.session = requests.Session()
 
-        self.session.headers.update = {
-            "Content-Type": "application/x-www-form-urlencoded",
-        }
-
         self.account_id = None
         self.bearer = None
 
@@ -125,6 +121,7 @@ class FriendsRemover:
             timeout=TIMEOUT_IN_SECONDS,
         )
 
+        print(response.text)
         response.raise_for_status()
 
         return response.json()
