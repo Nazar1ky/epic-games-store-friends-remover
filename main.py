@@ -147,7 +147,7 @@ class FriendsRemover:
         return response.json()
 
     def _remove_friends(self) -> None:
-        """https://github.com/LeleDerGrasshalmi/FortniteEndpointsDocumentation/blob/main/EpicGames/FriendsService/Friends/Clear.md"""
+        """https://github.com/LeleDerGrasshalmi/FortniteEndpointsDocumentation/blob/main/EpicGames/FriendsService/Friends/ClearFriendsList.md"""
         headers = {
             "Authorization": f"bearer {self.bearer}",
         }
@@ -159,7 +159,7 @@ class FriendsRemover:
         )
 
     def _kill_session(self) -> None:
-        """https://github.com/LeleDerGrasshalmi/FortniteEndpointsDocumentation/blob/main/EpicGames/FriendsService/Friends/Clear.md"""
+        """https://github.com/LeleDerGrasshalmi/FortniteEndpointsDocumentation/blob/main/EpicGames/AccountService/Authentication/Kill/Session.md"""
         headers = {
             "Authorization": f"bearer {self.bearer}",
         }
