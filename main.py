@@ -62,15 +62,14 @@ class FriendsRemover:
             "You sure you want to remove all friends?",
         )
 
-        if not confirm:
-            return
-
-        self._remove_friends()
+        if confirm:
+            self._remove_friends()
+            console.print(f"[bold][green]Removed {friends_count} friends!")
 
         self._kill_session()
 
         console.print(
-            f"[bold][green]Removed {friends_count} friends!\n[yellow]Session has been killed",
+            "[bold][yellow]Session has been killed",
         )
 
         console.input()
