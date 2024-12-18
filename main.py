@@ -35,7 +35,7 @@ class FriendsRemover:
         device_code = self.device_code(token)
 
         console.input(
-            f"[bold][green]Login (press enter to continue):[/green] [red]{device_code["verification_uri_complete"]}",
+            f"[bold][green]Login (press enter to continue):[/green] [red]{device_code['verification_uri_complete']}",
         )
 
         try:
