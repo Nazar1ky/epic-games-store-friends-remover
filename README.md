@@ -23,28 +23,29 @@
 ![pic](https://github.com/user-attachments/assets/36e140fe-1aa4-4502-b095-54b744569d91)
 
 ## Description
-Basically that's bulk remover, you have to login and script will remove friends in one request.
+This is a bulk Epic Games Store friends remover. You just log in, and the script removes all friends in a single request.
 
 ## Usage
 Epic Games Store Friends Remover is pretty simple to use.
 
+### Exe
 > [!WARNING]
-> **Windows Defender mark exe as virus because it compiled using PyInstaller and have no-sign.**
+> **Windows Defender may detect the .exe as a virus because it’s compiled using PyInstaller and has no digital signature.**
 
-* If you Windows user you can download exe from [releases](https://github.com/Nazar1ky/epic-games-store-remove-all-friends/releases).
-* [Alternative way](https://github.com/Nazar1ky/epic-games-store-remove-all-friends?tab=readme-ov-file#python) to run script using source and Python.
+* If you're a Windows user, you can download the `.exe` from [releases](https://github.com/Nazar1ky/epic-games-store-remove-all-friends/releases).
+* [Alternative way](https://github.com/Nazar1ky/epic-games-store-remove-all-friends?tab=readme-ov-file#python) to run the script using Python source code.
 
 ### Python
-1. Make sure that you have installed [**Python 3.13**](https://www.python.org/downloads/) with checkbox ["Add Python 3.13 to PATH"](https://miro.medium.com/v2/resize:fit:1344/0*7nOyowsPsGI19pZT.png).
-3. [Download](https://github.com/Nazar1ky/epic-games-store-remove-all-friends/archive/refs/heads/main.zip) or clone repository using [**Git**](https://git-scm.com/downloads).
+1. Make sure [**Python**](https://www.python.org/downloads/) is installed with the ["Add Python to PATH"](https://miro.medium.com/v2/resize:fit:1344/0*7nOyowsPsGI19pZT.png) option checked.
+2. [Download](https://github.com/Nazar1ky/epic-games-store-remove-all-friends/archive/refs/heads/main.zip) the ZIP or clone repository using [**Git**](https://git-scm.com/downloads):
 ```
 git clone https://github.com/Nazar1ky/epic-games-store-remove-all-friends
 ```
-3. Install the requirements.
+3. Install the required packages:
 ```
 pip install -U -r requirements.txt
 ```
-4. Run script.
+4. Run the script.
 ```
 python main.py
 ```
