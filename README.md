@@ -1,8 +1,8 @@
 <h1 align="center">Epic Games Friends Remover</h1>
 
 <p align="center">
-    <a href="https://www.python.org/downloads/release/python-3126/" align="center">
-        <img alt="Python" src="https://img.shields.io/badge/python-3.13-blue?logo=python&style=for-the-badge&logoColor=white">
+    <a href="https://python.org/downloads/" align="center">
+        <img alt="Python" src="https://img.shields.io/badge/python-3.14-blue?logo=python&style=for-the-badge&logoColor=white">
     </a>
     <a href="https://github.com/Nazar1ky/epic-games-store-remove-all-friends/issues" align="center">
         <img alt="GitHub Issues" src="https://img.shields.io/github/issues/Nazar1ky/epic-games-store-remove-all-friends?logo=github&style=for-the-badge">
